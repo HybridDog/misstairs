@@ -21,8 +21,7 @@ end
 minetest.register_node(":default:mesebrick", {
 	description = "Mese Brick",
 	tiles = {"default_mese_brick.png"},
-	is_ground_content = true,
-	groups = {cracksey=1,level=2},
+	groups = {cracky=1,level=2},
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -52,14 +51,23 @@ minetest.register_chatcommand("lstuff", {
 })
 
 -- disallows torches to be placed into not pointable buildable_to nodes except air
+local function torch_placeable(pos)
+	if not pos then
+		return true
+	end
+	local node = minetest.get_node(pos).name
+	if node == "air"
+	or (minetest.registered_nodes[node] and not minetest.registered_nodes[node].buildable_to) then
+		return true
+	end
+	return false
+end
 local torch_place = minetest.registered_items["default:torch"].on_place
 minetest.override_item("default:torch", {
 	on_place = function(itemstack, placer, pt, ...)
-		if pt.above
-		and minetest.get_node(pt.above).name ~= "air" then
-			return
+		if torch_placeable(pt.above) then
+			return torch_place(itemstack, placer, pt, ...)
 		end
-		return torch_place(itemstack, placer, pt, ...)
 	end
 })
 
