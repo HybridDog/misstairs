@@ -143,6 +143,14 @@ end
 
 
 --[[
+???
+
+default:obsidian_brick default:obsidianbrick
+--]]
+
+
+
+--[[
 tmp = minetest.registered_nodes["default:leaves"]
 tmp.groups = {snappy=3, leafdecay=3, flammable=2, leaves=1, falling_node=1}
 minetest.register_node(":default:leaves", tmp)
