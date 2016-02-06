@@ -1,3 +1,5 @@
+local load_time_start = os.clock()
+
 local function msslab(nam, desc, snds, groups)
 	stairs.register_stair_and_slab(nam, "default:"..nam,
 		groups,
@@ -18,6 +20,7 @@ local function msslab2(nam, desc, snds, groups, tnam)
 	)
 end
 
+-- add a mesebrick
 minetest.register_node(":default:mesebrick", {
 	description = "Mese Brick",
 	tiles = {"default_mese_brick.png"},
@@ -33,11 +36,12 @@ msslab2("mese", "Mese", default.node_sound_stone_defaults(), {cracky=1,level=2},
 msslab2("mesebrick", "Mese Brick", default.node_sound_stone_defaults(), {cracky=1,level=2}, "mese_brick")
 msslab2("coalblock", "Coal Block", default.node_sound_stone_defaults(), {cracky=3}, "coal_block")
 
+-- increase maximum cobble / stack
 minetest.override_item("default:cobble", {stack_max = 999})
 
 minetest.register_chatcommand("lstuff", {
 	params = "<action>",
-	description = "tell the stuff which's name contains param",
+	description = "tell the items whichs' name contains param",
 	privs = {},
 	func = function(name, param)
 		local text = ""
@@ -155,3 +159,11 @@ tmp = minetest.registered_nodes["default:leaves"]
 tmp.groups = {snappy=3, leafdecay=3, flammable=2, leaves=1, falling_node=1}
 minetest.register_node(":default:leaves", tmp)
 ]]
+
+local time = math.floor(tonumber(os.clock()-load_time_start)*100+0.5)/100
+local msg = "[misstairs] loaded after ca. "..time
+if time > 0.05 then
+	print(msg)
+else
+	minetest.log("info", msg)
+end
