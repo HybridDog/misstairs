@@ -144,6 +144,40 @@ default.grow_cactus = function(pos, node)
 	return true
 end
 
+-- gives singleplayer every priv
+minetest.register_on_newplayer(function(player)
+	local name = player:get_player_name()
+	if name == "singleplayer" then
+		minetest.set_player_privs(name, minetest.registered_privileges)
+	end
+end)
+
+-- more info to terminal for print and chat_send_player
+local realp = print
+function print(a, ...)
+	if tostring(a) == tostring(tonumber(a)) then
+		return realp(minetest.get_last_run_mod(), a, ...)
+	end
+	return realp(a, ...)
+end
+
+
+local chatsend = minetest.chat_send_player
+function minetest.chat_send_player(name, msg, ...)
+	minetest.log("action", "msg to "..name..': "'..msg..'"')
+	return chatsend(name, msg, ...)
+end
+
+-- [[ faster table insertion
+local tinsert = table.insert
+function table.insert(t, v, n)
+	if n then
+		return tinsert(t, v, n)
+	end
+	t[#t+1] = v
+end--]]
+
+
 
 
 --[[
