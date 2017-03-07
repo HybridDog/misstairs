@@ -164,7 +164,8 @@ end
 
 local chatsend = minetest.chat_send_player
 function minetest.chat_send_player(name, msg, ...)
-	minetest.log("action", "msg to "..name..': "'..msg..'"')
+	print"[2m"
+	minetest.log("action", "msg to "..name..': "'..msg..'"[m')
 	return chatsend(name, msg, ...)
 end
 
