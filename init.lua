@@ -1,5 +1,6 @@
 local load_time_start = os.clock()
 
+--[[
 local function msslab(nam, desc, snds, groups)
 	stairs.register_stair_and_slab(nam, "default:"..nam,
 		groups,
@@ -9,6 +10,7 @@ local function msslab(nam, desc, snds, groups)
 		snds
 	)
 end
+]]
 
 local function msslab2(nam, desc, snds, groups, tnam)
 	stairs.register_stair_and_slab(nam, "default:"..nam,
@@ -38,21 +40,6 @@ msslab2("coalblock", "Coal Block", default.node_sound_stone_defaults(), {cracky=
 
 -- increase maximum cobble / stack
 minetest.override_item("default:cobble", {stack_max = 999})
-
-minetest.register_chatcommand("lstuff", {
-	params = "<action>",
-	description = "tell the items whichs' name contains param",
-	privs = {},
-	func = function(name, param)
-		local text = ""
-		for i,_ in pairs(minetest.registered_items) do
-			if string.find(i, param) then
-				text = text..i..", "
-			end
-		end
-		minetest.chat_send_player(name, text)
-	end,
-})
 
 -- disallows torches to be placed into not pointable buildable_to nodes except air
 local function torch_placeable(pos)
@@ -178,6 +165,21 @@ function table.insert(t, v, n)
 	t[#t+1] = v
 end--]]
 
+
+
+-- Change the wield hand to use the skin
+
+minetest.after(0, function()
+	minetest.override_item("", {
+		wield_image = "wield_dummy.png^[combine:16x16:2,2=wield_dummy.png:" ..
+			"-52,-23=character.png^[transformfy",
+		wield_scale = {x=1.8,y=1,z=2.8},
+	})
+end)
+
+
+
+
 --[[ this one doesn't work faster
 function unpack(t, i)
 	i = i or 1
@@ -201,6 +203,10 @@ tmp.groups = {snappy=3, leafdecay=3, flammable=2, leaves=1, falling_node=1}
 minetest.register_node(":default:leaves", tmp)
 ]]
 
+--~ minetest.register_on_joinplayer(function(player)
+	--~ player:set_sky("#ffffff", "skybox", {"bg.png", "bg.png", "bg.png", "bg.png", "bg.png", "bg.png"})
+--~ end)
+
 local time = math.floor(tonumber(os.clock()-load_time_start)*100+0.5)/100
 local msg = "[misstairs] loaded after ca. "..time
 if time > 0.05 then
@@ -208,3 +214,25 @@ if time > 0.05 then
 else
 	minetest.log("info", msg)
 end
+
+
+
+
+
+
+
+
+
+--~ minetest.after(1, function()
+	--~ for node, data in pairs(minetest.registered_nodes) do
+		--~ if data.tiles then
+			--~ for i = 1,#t do
+				--~ local v = t[i]
+				--~ if data.tiles[1] == v.tex then
+					--~ print("	{name=" .. node .. ", r=" .. v.r .. ", g=" .. v.g ..
+						--~ ", b=" .. v.b .. "},")
+				--~ end
+			--~ end
+		--~ end
+	--~ end
+--~ end)
