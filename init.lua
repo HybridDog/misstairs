@@ -1,5 +1,12 @@
 local load_time_start = os.clock()
 
+do_compat_tests = true
+
+local path = minetest.get_modpath("misstairs")
+if do_compat_tests then
+	dofile(path .. "/lua_compat.lua")
+end
+
 --[[
 local function msslab(nam, desc, snds, groups)
 	stairs.register_stair_and_slab(nam, "default:"..nam,
