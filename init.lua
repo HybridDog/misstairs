@@ -1,6 +1,6 @@
 local load_time_start = os.clock()
 
-do_compat_tests = true
+local do_compat_tests = true
 
 local path = minetest.get_modpath("misstairs")
 if do_compat_tests then
@@ -37,13 +37,22 @@ minetest.register_node(":default:mesebrick", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
---msslab("desert_stone", "Desert Stone", default.node_sound_stone_defaults(), {cracky=3, stone=1})
---msslab("obsidian", "Obsidian", default.node_sound_stone_defaults(), {cracky=1,level=2})
-msslab2("mese", "Mese", default.node_sound_stone_defaults(), {cracky=1,level=2}, "mese_block")
---msslab2("desert_stonebrick", "Desert Stone Brick", default.node_sound_stone_defaults(), {cracky=2, stone=1}, "desert_stone_brick")
---msslab2("sandstonebrick", "Sandstone Brick", default.node_sound_stone_defaults(), {cracky=2}, "sandstone_brick")
-msslab2("mesebrick", "Mese Brick", default.node_sound_stone_defaults(), {cracky=1,level=2}, "mese_brick")
-msslab2("coalblock", "Coal Block", default.node_sound_stone_defaults(), {cracky=3}, "coal_block")
+--[[
+msslab("desert_stone", "Desert Stone", default.node_sound_stone_defaults(),
+	{cracky=3, stone=1})
+msslab("obsidian", "Obsidian", default.node_sound_stone_defaults(),
+	{cracky=1,level=2})
+msslab2("desert_stonebrick", "Desert Stone Brick",
+	default.node_sound_stone_defaults(), {cracky=2, stone=1},
+	"desert_stone_brick")
+msslab2("sandstonebrick", "Sandstone Brick", default.node_sound_stone_defaults(), {cracky=2}, "sandstone_brick")
+--]]
+msslab2("mese", "Mese", default.node_sound_stone_defaults(), {cracky=1,level=2},
+	"mese_block")
+msslab2("mesebrick", "Mese Brick", default.node_sound_stone_defaults(),
+	{cracky=1,level=2}, "mese_brick")
+msslab2("coalblock", "Coal Block", default.node_sound_stone_defaults(),
+	{cracky=3}, "coal_block")
 
 -- increase maximum cobble / stack
 minetest.override_item("default:cobble", {stack_max = 999})

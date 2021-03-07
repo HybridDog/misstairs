@@ -1,18 +1,16 @@
 -- Warnings or errors when an avoidable function not compatible with Lua 5.3 is
 -- used
 
-function warn(msg)
+local function warn(msg)
 	--~ minetest.log("deprecated", "Compat: " .. msg)
 	assert(false, "Compat: " .. msg)
 end
 
-local pow = math.pow
 function math.pow(x, y)
 	warn("math.pow(x, y) will be deprecated, use x ^ y instead")
 	return x ^ y
 end
 
-local pow = math.ldexp
 function math.ldexp(x, y)
 	warn("math.ldexp(x, y) will be deprecated, use x * 2.0 ^ y instead")
 	return x * 2.0 ^ y
